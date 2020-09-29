@@ -1,0 +1,9 @@
+This folder is dedicated to analysis project analysis
+
+To get data set of a time interval copy the following lines to the top of you file:
+
+import sys
+sys.path.append('/home/ardelalegre/SoundMapping/Analysis/Util')
+from get_time_interval_matrix_data import get_time_interval_matrix_data
+
+and use get_time_interval_matrix_data to create a dataset from the matrix
