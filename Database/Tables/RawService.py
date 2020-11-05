@@ -20,7 +20,7 @@ class RawService:
         query = '''
         SELECT *
         FROM raw
-        WHERE `Time In Seconds` >= {0} AND 'Time In Seconds' < {1}
+        WHERE `Time In Seconds` >= {0} AND `Time In Seconds` < {1}
         '''.format(start_time, end_time)
 
         return self.database.execute_query(query)

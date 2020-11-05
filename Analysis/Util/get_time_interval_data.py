@@ -25,7 +25,7 @@ def get_time_interval_raw_data(start_time, end_time):
     #convert time to unix time
     unixtime_start, unixtime_end = strTime_to_unixTime(start_time, end_time)
     
-    #get data from multiDimMatrix
+    #get data from rawService
     dataObj = rawService.get_time_interval_object(unixtime_start, unixtime_end)
     
     dataPoints = dataObj.fetchall()
