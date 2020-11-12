@@ -12,9 +12,14 @@ computes unix time from time string
 @return float unixtime_end
 """
 def strTime_to_unixTime(start, end):
-    FORMAT_TIMESTRING = '%b %d %Y %I:%M%p'
-    dt_start = datetime.datetime.strptime(start, FORMAT_TIMESTRING)
-    dt_end = datetime.datetime.strptime(end, FORMAT_TIMESTRING)
+    try:
+        FORMAT_TIMESTRING = '%b %d %Y %I:%M%p'
+        dt_start = datetime.datetime.strptime(start, FORMAT_TIMESTRING)
+        dt_end = datetime.datetime.strptime(end, FORMAT_TIMESTRING)
+    except ValueError:
+        FORMAT_TIMESTRING = '%b %d %Y %I:%M:%S%p'
+        dt_start = datetime.datetime.strptime(start, FORMAT_TIMESTRING)
+        dt_end = datetime.datetime.strptime(end, FORMAT_TIMESTRING)
     unixtime_start = time.mktime(dt_start.timetuple())
     unixtime_end = time.mktime(dt_end.timetuple())
     return unixtime_start, unixtime_end   
