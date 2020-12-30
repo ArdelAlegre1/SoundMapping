@@ -33,7 +33,7 @@ def get_time_interval_raw_data(start_time, end_time):
     df.columns = dataPoints[0].keys() 
     df = df.fillna(value=np.nan)
     
-    return df.to_numpy()  
+    return df.to_numpy(), df 
   
 """
 Gets numpy dataset from multiDimMatrix
