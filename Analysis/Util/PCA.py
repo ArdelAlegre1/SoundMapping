@@ -9,7 +9,7 @@ computes the eigen vectors and eigen values from given data
 
 @param numpyArray data - data used to find eigen vectors and values
 
-@return numpyArray eigen_values - array of eige"n values
+@return numpyArray eigen_values - array of eigen values
 @return numpyArray eigen_vectors = array of eigen vectors
 """
 def get_eigen_vectors(data):
