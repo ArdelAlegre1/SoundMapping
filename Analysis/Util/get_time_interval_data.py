@@ -57,3 +57,25 @@ def get_time_interval_matrix_data(start_time, end_time):
     df = df.fillna(value=np.nan)
     
     return df.to_numpy()  
+
+"""
+Extract observations where all arrays are active from interval matrix data. Excludes zeros and nans
+
+@param interval_matrix_data
+@param array_indices - a list of target arrays: [0,1,2,3,5]
+
+@return numpy array - cleaned_data: all cleaned observations corresponding to target arrays without time column
+@return numpy array - selected_raw_obs: a size reduced matrix data extracted from the original matrix data using clean data indices. 
+"""
+def extract_all_active_observations(interval_matrix_data, array_indices):
+    # exclude time column
+    observations = interval_matrix_data[:,1:]
+    selected_obs = np.hstack([observations[:,i*3:i*3+3] for i in array_indices])
+    cleaned_data = []
+    ind = []
+    for i in range(selected_obs.shape[0]):
+        if not any(np.isnan(selected_obs[i,:])) and not any(selected_obs[i,:]==0):
+            cleaned_data.append(selected_obs[i,:])
+            ind.append(i)
+    selected_raw_obs = interval_matrix_data[ind,:]        
+    return  np.vstack(cleaned_data), selected_raw_obs

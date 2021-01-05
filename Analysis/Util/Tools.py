@@ -1,7 +1,6 @@
 import datetime
 import time
 
-
 """
 computes unix time from time string
 
