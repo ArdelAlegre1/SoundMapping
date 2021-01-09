@@ -14,7 +14,7 @@ computes the eigen vectors and eigen values from given data
 """
 def get_eigen_vectors(data):
     
-    cdata = get_cdata(data)
+    cdata, _ = get_cdata(data)
     dimensions = cdata.shape[1]
     n=cdata.shape[0]
     block_size=10000
@@ -37,6 +37,7 @@ calculates cdata from data
 @param numpyArray data - cooridnate data points
 
 @return cdata
+@returen data_mean
 """
 def get_cdata(data):
     # the first column of multi dimension matrix is time
@@ -44,7 +45,7 @@ def get_cdata(data):
     tmp = data[:,1:] - data_mean
     cdata=np.nan_to_num(tmp)
     
-    return cdata
+    return cdata, data_mean
 
 
 """
