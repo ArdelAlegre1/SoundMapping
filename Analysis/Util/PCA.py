@@ -23,13 +23,12 @@ def get_eigen_vectors(data):
     outters = np.zeros((dimensions, dimensions))
     for j in range(n):
         outters += np.outer(cdata[j,:], cdata[j,:])
+    covariance = outters/n
 
-    _cov = outters/n
-
-    #eigen values
-    eigen_values, eigen_vectors = LA.eig(_cov)
-    
-    return eigen_values, eigen_vectors
+    eigen_values, eigen_vectors = LA.eig(covariance)
+    sorted_eig_val, sorted_eig_vec = sort_eigen_vectors(eigen_values, eigen_vectors)
+   
+    return sorted_eig_val, sorted_eig_vec
 
 """
 calculates cdata from data
@@ -37,7 +36,7 @@ calculates cdata from data
 @param numpyArray data - cooridnate data points
 
 @return cdata
-@returen data_mean
+@return data_mean
 """
 def get_cdata(data):
     # the first column of multi dimension matrix is time
@@ -46,6 +45,22 @@ def get_cdata(data):
     cdata=np.nan_to_num(tmp)
     
     return cdata, data_mean
+
+"""
+sorts eigen values and eigen vectors based on the magnitude of eigen values
+
+@param numpyArray eigen_values
+@param numpyArray eigen_vectors
+
+@return sorted_eig_val
+@return sorted_eig_vec
+"""
+def sort_eigen_vectors(eigen_values, eigen_vectors):
+    eig_val_sorted_indices = np.argsort(eigen_values)
+    eig_val_sorted_indices = eig_val_sorted_indices[-1::-1]
+    sorted_eig_val = eigen_values[eig_val_sorted_indices]
+    sorted_eig_vec = eigen_vectors[:,eig_val_sorted_indices]
+    return sorted_eig_val, sorted_eig_vec
 
 
 """
@@ -60,10 +75,6 @@ if optional params are not set, default will be taken from values.py
 
 @return numpyArray data projected onto eigen vectors
 """
-def project_to_eigen_vectors(cdata, dimensions, eigen_values=EIGEN_VALUES, eigen_vectors=EIGEN_VECTORS):
-    
-    eig_val_sorted_indices = np.argsort(eigen_values)
-    eig_val_sorted_indices = eig_val_sorted_indices[-1::-1]
-    sorted_eigvec = eigen_vectors[:,eig_val_sorted_indices]
-    
-    return np.dot(cdata,sorted_eigvec[:,:dimensions])
+def project_to_eigen_vectors(data, dimensions, eigen_values=EIGEN_VALUES, eigen_vectors=EIGEN_VECTORS):
+        
+    return np.dot(data,eigen_vectors[:,:dimensions])
