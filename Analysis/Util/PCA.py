@@ -31,6 +31,19 @@ def get_eigen_vectors(data):
 
 
 """
+computes normalized singular values from eigen vectors 
+
+@param numpyArray data - eigen vectors
+
+@return numpyArray singular_values 
+"""
+def eigen2singular(eigen_vectors):
+    singular_values = np.sqrt(eigen_vectors)
+    normalized = singular_values/np.sum(singular_values)
+    return normalized
+
+
+"""
 calculates cdata from data
 
 @param numpyArray data - cooridnate data points
